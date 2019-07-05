@@ -1,0 +1,15 @@
+{
+	"id" : "sabnzbd",
+	"name" : "Sabnzbd",
+	"description" : "Plugin permettant la gestion de votre server SABnzbd",
+	"licence" : "AGPL",
+	"author" : "Jeedom SAS",
+	"require" : "3.2",
+	"category" : "communication",
+	"display" : "panel",
+	"mobile" : "panel",
+	"hasDependency" : false,
+	"hasOwnDeamon" : false,
+        "changelog" : "https://nextdom.github.io/plugin-sabnzbd/#language#/changelog",
+        "documentation" : "https://nextdom.github.io/plugin-sabnzbd/#language#/"
+}

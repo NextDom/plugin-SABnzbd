@@ -1,1 +1,1 @@
-# plugin_sabnzbd
+# plugin-sabnzbd
