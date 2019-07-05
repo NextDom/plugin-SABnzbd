@@ -33,8 +33,10 @@ class sabnzbd extends eqLogic {
 
     private function getListDefaultCmd()
     {
-        return array(   "speed" => array('speed', 'info', 'numeric', "KB/S", 0, "GENERIC_INFO", 'jauge', 'jauge', 'A',1,12000),
-		"status" => array('status', 'info', 'string', "", 0, "GENERIC_INFO", 'badge','badge', 'B',0,0),
+        return array(   "speed" => array('Speed', 'info', 'numeric', "KB/S", 0, "GENERIC_INFO", 'jauge', 'jauge', 'A',1,12000),
+                "size" => array('Size', 'info', 'numeric', "GB", 0, "GENERIC_INFO", 'jauge', 'jauge', 'B',1,12000),
+                "sizeleft" => array('Size Left', 'info', 'numeric', "GB", 0, "GENERIC_INFO", 'jauge', 'jauge', 'C',1,12000),
+		"status" => array('Status', 'info', 'string', "", 0, "GENERIC_INFO", 'badge','badge', 'D',0,0),
 		"action" => array('Commande', 'action', 'select', "", 0, "GENERIC_ACTION", '', '', 'pause|'.__('Pause Sabnzbd',__FILE__).';resume|'.__('Resume',__FILE__).';shutdown|'.__('Shutdown',__FILE__))
         );
     }
@@ -104,6 +106,13 @@ class sabnzbd extends eqLogic {
     public function preRemove() {
     }
 
+    public static function get_factorGB($unit,$factorGB) {
+        if (array_key_exists($unit,$factorGB)){
+	    return $factorGB[$unit];
+		} else {
+		 return 1;
+		}
+    }
     public static function pull() {
             foreach (self::byType('sabnzbd') as $eqLogic) {
                 $eqLogic->scan();
@@ -112,6 +121,7 @@ class sabnzbd extends eqLogic {
 
     public function scan() {
 	$factor=array("M"=>1000, "K"=>1);
+	$factorGB=array("GB"=>1, "MB"=>1000, " B"=>1000000);
 
 	    	
         $session_sabnzbd = new sabnzbd_api();
@@ -135,7 +145,24 @@ class sabnzbd extends eqLogic {
                            $kb = substr($val, 0,-2) * $factor[$unit];
 			   $this->checkAndUpdateCmd($id,$kb);
                            $this->save();
-			   
+			}
+			if (($id == "size") or ($id == "sizeleft")) {
+		log::add('sabnzbd','info',"id = ".$id);
+		log::add('sabnzbd','info',"val = ".$val);
+			    if ($val == "") { 
+				$val = "0.0 M";
+			    }
+		$unit = substr($val, -3);
+
+
+                           $gb = substr($val, 0,-2) / $this->get_factorGB($unit,$factorGB);
+		log::add('sabnzbd','info',"unit = ".$unit);
+		log::add('sabnzbd','info',"gb = ".$gb);
+                           $max = substr($QueuesInfo["queue"]["size"], 0,-3) / $this->get_factorGB($factorGB,substr($QueuesInfo["queue"]["size"], -2));
+                           $max = max + substr($QueuesInfo["queue"]["sizeleft"], 0,-3) / $this->get_factorGB($factorGB,substr($QueuesInfo["queue"]["sizeleft"], -2));
+		log::add('sabnzbd','info',"max = ".$max);
+			   $this->checkAndUpdateCmd($id,$gb);
+                           $this->save();
 			}
 			if ($id == "status") {
 				$this->checkAndUpdateCmd($id,$QueuesInfo["queue"][$id]);
