@@ -156,7 +156,8 @@ class sabnzbd extends eqLogic {
 
                            $gb = substr($val, 0,-2) / $this->get_factorGB($unit,$factorGB);
                            $max = substr($QueuesInfo["queue"]["size"], 0,-3) / $this->get_factorGB($factorGB,substr($QueuesInfo["queue"]["size"], -2));
-                           $max = max + substr($QueuesInfo["queue"]["sizeleft"], 0,-3) / $this->get_factorGB($factorGB,substr($QueuesInfo["queue"]["sizeleft"], -2));
+                           $max = $max + substr($QueuesInfo["queue"]["sizeleft"], 0,-3) / $this->get_factorGB($factorGB,substr($QueuesInfo["queue"]["sizeleft"], -2));
+		log::add('sabnzbd','info',"Commande ".id." val=".$gb." max=".$max);
 			   $cmd->setConfiguration('maxValue',$max);
 			   $this->checkAndUpdateCmd($id,$gb);
 			   $this->save();
