@@ -135,6 +135,7 @@ class sabnzbd extends eqLogic {
                 {
 			list($name, $type, $subtype, $unit, $invertBinary, $generic_type, $template_dashboard, $template_mobile, $listValue, $multiplier,$maxValue) = $data;
 			##$this->checkAndUpdateCmd($id,$queue_info["queue"][$id]);
+			$cmd = $this->getCmd(null, $id);
 			$val = $QueuesInfo["queue"][$id];
 			if ($id == "speed") {
 			   log::add('sabnzbd','info'," inti val =  ".$val);
@@ -147,8 +148,6 @@ class sabnzbd extends eqLogic {
                            $this->save();
 			}
 			if (($id == "size") or ($id == "sizeleft")) {
-		log::add('sabnzbd','info',"id = ".$id);
-		log::add('sabnzbd','info',"val = ".$val);
 			    if ($val == "") { 
 				$val = "0.0 M";
 			    }
@@ -156,13 +155,11 @@ class sabnzbd extends eqLogic {
 
 
                            $gb = substr($val, 0,-2) / $this->get_factorGB($unit,$factorGB);
-		log::add('sabnzbd','info',"unit = ".$unit);
-		log::add('sabnzbd','info',"gb = ".$gb);
                            $max = substr($QueuesInfo["queue"]["size"], 0,-3) / $this->get_factorGB($factorGB,substr($QueuesInfo["queue"]["size"], -2));
                            $max = max + substr($QueuesInfo["queue"]["sizeleft"], 0,-3) / $this->get_factorGB($factorGB,substr($QueuesInfo["queue"]["sizeleft"], -2));
-		log::add('sabnzbd','info',"max = ".$max);
+			   $cmd->setConfiguration('maxValue',$max);
 			   $this->checkAndUpdateCmd($id,$gb);
-                           $this->save();
+			   $this->save();
 			}
 			if ($id == "status") {
 				$this->checkAndUpdateCmd($id,$QueuesInfo["queue"][$id]);
