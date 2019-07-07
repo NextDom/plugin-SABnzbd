@@ -10,6 +10,6 @@
 	"mobile" : "panel",
 	"hasDependency" : false,
 	"hasOwnDeamon" : false,
-        "changelog" : "https://nextdom.github.io/plugin-sabnzbd/#language#/changelog",
-        "documentation" : "https://nextdom.github.io/plugin-sabnzbd/#language#/"
+        "changelog" : "https://nextdom.github.io/plugin-SABnzbd/#language#/changelog",
+        "documentation" : "https://nextdom.github.io/plugin-SABnzbd/#language#/"
 }
