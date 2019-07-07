@@ -28,7 +28,7 @@ class sabnzbd extends eqLogic {
     public function postInsert()
     {
         $this->postUpdate();
-        $this->scan();
+        $this->scan_twice();
     }
 
     private function getListDefaultCmd()
@@ -115,10 +115,16 @@ class sabnzbd extends eqLogic {
     }
     public static function pull() {
             foreach (self::byType('sabnzbd') as $eqLogic) {
-                $eqLogic->scan();
+                $eqLogic->scan_twice();
             }
     }
 
+    public function scan_twice() {
+	    this->scan;
+	    sleep(30);
+	    this->scan;
+
+    }
     public function scan() {
 	$factor=array("M"=>1000, "K"=>1);
 	$factorGB=array("GB"=>1, "MB"=>1000, " B"=>1000000);
@@ -182,7 +188,7 @@ class sabnzbdCmd extends cmd
 		$eqLogic = $this->getEqLogic();
 		$session_cmd = new sabnzbd_api();
 	        $session_cmd->login($eqLogic->getConfiguration('host'),$eqLogic->getConfiguration('port'),$eqLogic->getConfiguration('API'),$_options['select']);
-                $eqLogic->scan();
+                $eqLogic->scan_twice();
         }
     }
 
