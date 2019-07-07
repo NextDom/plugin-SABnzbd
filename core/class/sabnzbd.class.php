@@ -120,10 +120,9 @@ class sabnzbd extends eqLogic {
     }
 
     public function scan_twice() {
-	    this->scan;
+	    this->scan();
 	    sleep(30);
-	    this->scan;
-
+	    this->scan();
     }
     public function scan() {
 	$factor=array("M"=>1000, "K"=>1);
