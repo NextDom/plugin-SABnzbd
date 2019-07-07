@@ -28,7 +28,7 @@ class sabnzbd extends eqLogic {
     public function postInsert()
     {
         $this->postUpdate();
-        $this->scan_twice();
+        $this->scan();
     }
 
     private function getListDefaultCmd()
