@@ -1,4 +1,4 @@
-![sabnzbd1](../images/sabnzbd_icon.png) Présentation
+![sabnzbd1](../images/1stSabnzbd.png) Présentation
 ===
 Plugin de control des serveurs SABnzbd
 
