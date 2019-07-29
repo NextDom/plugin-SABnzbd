@@ -37,6 +37,7 @@ class sabnzbd extends eqLogic {
                 "size" => array('Size', 'info', 'numeric', "GB", 0, "GENERIC_INFO", 'jauge', 'jauge', 'B',1,12000),
                 "sizeleft" => array('Size Left', 'info', 'numeric', "GB", 0, "GENERIC_INFO", 'jauge', 'jauge', 'C',1,12000),
 		"status" => array('Status', 'info', 'string', "", 0, "GENERIC_INFO", 'badge','badge', 'D',0,0),
+		"nzb file" => array('upload', 'action', 'string', "", 0, "UPLOAD", 'badge','badge', 'D',0,0),
 		"action" => array('Commande', 'action', 'select', "", 0, "GENERIC_ACTION", '', '', 'pause|'.__('Pause Sabnzbd',__FILE__).';resume|'.__('Resume',__FILE__).';shutdown|'.__('Shutdown',__FILE__))
         );
     }
